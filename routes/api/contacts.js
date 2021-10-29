@@ -1,23 +1,65 @@
 const express = require('express')
+const { NotFound } = require('http-errors')
+
+const contactsOptions = require('../../model/controllers')
+
 const router = express.Router()
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'HW done' })
+router.get('/', async (_, res, next) => {
+  try {
+    const result = await contactsOptions.listContacts()
+    if (!result) {
+      throw new NotFound('Not found')
+    }
+    res.json({
+      status: 'success',
+      code: 200,
+      result,
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  try {
+    const { contactId } = req.params
+    const result = await contactsOptions.getContactById(contactId)
+    if (!result) {
+      throw new NotFound('Not found')
+    }
+    res.json({
+      status: 'success',
+      code: 200,
+      result,
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  try {
+    const { name, email, phone } = req.body
+    const result = await contactsOptions.addContact(name, email, phone)
+    if (!result) {
+      throw new NotFound('Not found')
+    }
+    res.json({
+      status: 'success',
+      code: 200,
+      result,
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.delete('/:contactId', async (req, res, next) => {
   res.json({ message: 'template message' })
 })
 
-router.patch('/:contactId', async (req, res, next) => {
+router.put('/:contactId', async (req, res, next) => {
   res.json({ message: 'template message' })
 })
 
