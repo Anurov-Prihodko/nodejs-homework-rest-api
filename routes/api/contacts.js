@@ -1,7 +1,14 @@
 const express = require('express')
 const { NotFound } = require('http-errors')
+const Joi = require('joi')
 
 const contactsOptions = require('../../model/controllers')
+
+const joiSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  phone: Joi.string().required(),
+})
 
 const router = express.Router()
 
@@ -45,9 +52,9 @@ router.post('/', async (req, res, next) => {
     if (!result) {
       throw new NotFound('Not found')
     }
-    res.json({
+    res.status(201).json({
       status: 'success',
-      code: 200,
+      code: 201,
       result,
     })
   } catch (error) {
