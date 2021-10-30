@@ -10,6 +10,12 @@ const joiSchema = Joi.object({
   phone: Joi.string().required(),
 })
 
+const joiSchemaPut = Joi.object({
+  name: Joi.string().min(2).max(1478),
+  email: Joi.string().email(),
+  phone: Joi.string(),
+})
+
 const router = express.Router()
 
 router.get('/', async (_, res, next) => {
@@ -85,7 +91,7 @@ router.delete('/:contactId', async (req, res, next) => {
 
 router.put('/:contactId', async (req, res, next) => {
   try {
-    const { error } = joiSchema.validate(req.body)
+    const { error } = joiSchemaPut.validate(req.body)
     if (error) {
       throw new BadRequest(error.message)
     }

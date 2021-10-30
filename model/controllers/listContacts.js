@@ -1,6 +1,6 @@
 const fs = require('fs/promises')
 
-const contactsPath = require('./contactsPath')
+const contactsPath = require('../helpers/contactsPath')
 
 const listContacts = async () => {
   const result = await fs.readFile(contactsPath, 'utf-8')
