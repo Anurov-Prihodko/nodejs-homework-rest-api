@@ -12,6 +12,7 @@ const removeContact = async (contactId) => {
   if (idx === -1) {
     return null
   }
+
   await updateContacts(filteredContacts)
   return contacts[idx]
 }
