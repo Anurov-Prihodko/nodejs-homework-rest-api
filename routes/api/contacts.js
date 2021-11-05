@@ -5,7 +5,8 @@ const { contacts: ctrl } = require('../../controllers')
 const { validation, controllerWrapper } = require('../../middlewares')
 const {
   joiContactsSchema,
-  joiContactsSchemaFlex,
+  joiContactsSchemaPut,
+  joiContactsSchemaPatch,
 } = require('../../validations/contactsValidations')
 
 const router = express.Router()
@@ -22,13 +23,13 @@ router.post(
 
 router.put(
   '/:contactId',
-  validation(joiContactsSchemaFlex),
+  validation(joiContactsSchemaPut),
   controllerWrapper(ctrl.updateContactById)
 )
 
 router.patch(
   '/:contactId/favorite',
-  validation(joiContactsSchemaFlex),
+  validation(joiContactsSchemaPatch),
   controllerWrapper(ctrl.updateStatusContact)
 )
 
