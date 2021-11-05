@@ -1,9 +1,8 @@
 const { NotFound } = require('http-errors')
-const contactsOptions = require('../../model/options')
+const { Contact } = require('../../model')
 
-const addContact = async (req, res, next) => {
-  const { name, email, phone } = req.body
-  const result = await contactsOptions.addContact(name, email, phone)
+const addContact = async (req, res) => {
+  const result = await Contact.create(req.body)
   if (!result) {
     throw new NotFound('Not found')
   }

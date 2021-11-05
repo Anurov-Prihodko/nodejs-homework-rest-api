@@ -1,4 +1,4 @@
 const joiContactsSchema = require('./contactsValidations')
-const joiContactsSchemaPut = require('./contactsValidations')
+const joiContactsSchemaFlex = require('./contactsValidations')
 
-module.exports = { joiContactsSchema, joiContactsSchemaPut }
+module.exports = { joiContactsSchema, joiContactsSchemaFlex }

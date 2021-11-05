@@ -1,8 +1,8 @@
 const { NotFound } = require('http-errors')
-const contactsOptions = require('../../model/options')
+const { Contact } = require('../../model')
 
 const getAll = async (_, res) => {
-  const result = await contactsOptions.listContacts()
+  const result = await Contact.find({})
   if (!result) {
     throw new NotFound('Not found')
   }
