@@ -7,7 +7,7 @@ const {
   joiContactsSchema,
   joiContactsSchemaPut,
   joiContactsSchemaPatch,
-} = require('../../validations/contactsValidations')
+} = require('../../validations')
 
 const router = express.Router()
 
