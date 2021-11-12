@@ -1,8 +1,15 @@
 const { NotFound } = require('http-errors')
 const { Contact } = require('../../model')
 
-const getAll = async (_, res) => {
-  const result = await Contact.find({})
+const getAll = async (req, res) => {
+  const { page, limit } = req.query
+  const skip = (page - 1) * limit
+  const { _id } = req.user
+  const result = await Contact.find(
+    { owner: _id },
+    '_id name email phone favorite owner',
+    { skip, limit: +limit }
+  ).populate('owner', '_id email subscription')
   if (!result) {
     throw new NotFound('Not found')
   }

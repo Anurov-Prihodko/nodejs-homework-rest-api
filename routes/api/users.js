@@ -1,6 +1,10 @@
 const express = require('express')
 
-const { validation, controllerWrapper } = require('../../middlewares')
+const {
+  validation,
+  controllerWrapper,
+  authentication,
+} = require('../../middlewares')
 const { users: ctrl } = require('../../controllers')
 
 const { JoiUserSchema } = require('../../validations')
@@ -14,5 +18,9 @@ router.post(
 )
 
 router.post('/login', validation(JoiUserSchema), controllerWrapper(ctrl.login))
+
+router.get('/current', authentication, controllerWrapper(ctrl.checkUserByToken))
+
+router.post('/logout', authentication, controllerWrapper(ctrl.logout))
 
 module.exports = router
