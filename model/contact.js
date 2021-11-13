@@ -20,7 +20,10 @@ const contactSchema = Schema(
     favorite: {
       type: Boolean,
       default: false,
-      require: true,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
     },
   },
 
