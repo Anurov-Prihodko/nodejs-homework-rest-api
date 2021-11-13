@@ -2,7 +2,7 @@ const { NotFound } = require('http-errors')
 const { Contact } = require('../../model')
 
 const getAll = async (req, res) => {
-  const { page, limit } = req.query
+  const { page = 1, limit = 2 } = req.query
   const skip = (page - 1) * limit
   const { _id } = req.user
   const result = await Contact.find(
