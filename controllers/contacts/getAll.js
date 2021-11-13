@@ -3,7 +3,13 @@ const { Contact } = require('../../model')
 
 const getAll = async (req, res) => {
   const { page = 1, limit = 2 } = req.query
-  const skip = (page - (+limit - +limit)) * limit
+
+  if (typeof page !== 'number' || typeof limit !== 'number') {
+    throw new NotFound('Not found page or limit')
+  }
+
+  const one = +limit / +limit
+  const skip = (page - one) * limit
   const { _id } = req.user
   const result = await Contact.find(
     { owner: _id },
