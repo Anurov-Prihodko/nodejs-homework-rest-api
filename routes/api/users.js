@@ -4,10 +4,11 @@ const {
   validation,
   controllerWrapper,
   authentication,
+  upload,
 } = require('../../middlewares')
 const { users: ctrl } = require('../../controllers')
 
-const { JoiUserSchema } = require('../../validations')
+const { JoiUserSchema, joiUserSchemaAvatar } = require('../../validations')
 
 const router = express.Router()
 
@@ -22,5 +23,13 @@ router.post('/login', validation(JoiUserSchema), controllerWrapper(ctrl.login))
 router.get('/current', authentication, controllerWrapper(ctrl.checkUserByToken))
 
 router.post('/logout', authentication, controllerWrapper(ctrl.logout))
+
+router.patch(
+  '/avatars',
+  authentication,
+  upload.single('avatarURL'),
+  // validation(joiUserSchemaAvatar),
+  controllerWrapper(ctrl.updateAvatar)
+)
 
 module.exports = router
