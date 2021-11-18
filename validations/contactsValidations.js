@@ -18,10 +18,6 @@ const joiContactsSchemaPatch = Joi.object({
   favorite: Joi.boolean().required(),
 })
 
-const joiUserSchemaAvatar = Joi.object({
-  avatarURL: Joi.string().required(),
-})
-
 const JoiUserSchema = Joi.object({
   password: Joi.string().min(6).required(),
   email: Joi.string().email().required(),
@@ -34,5 +30,4 @@ module.exports = {
   joiContactsSchemaPut,
   joiContactsSchemaPatch,
   JoiUserSchema,
-  joiUserSchemaAvatar,
 }

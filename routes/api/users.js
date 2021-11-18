@@ -8,7 +8,7 @@ const {
 } = require('../../middlewares')
 const { users: ctrl } = require('../../controllers')
 
-const { JoiUserSchema, joiUserSchemaAvatar } = require('../../validations')
+const { JoiUserSchema } = require('../../validations')
 
 const router = express.Router()
 
@@ -27,8 +27,7 @@ router.post('/logout', authentication, controllerWrapper(ctrl.logout))
 router.patch(
   '/avatars',
   authentication,
-  upload.single('avatarURL'),
-  // validation(joiUserSchemaAvatar),
+  upload.single('avatar'),
   controllerWrapper(ctrl.updateAvatar)
 )
 

@@ -4,4 +4,10 @@ const checkUserByToken = require('./checkUserByToken')
 const logout = require('./logout')
 const updateAvatar = require('./updateAvatar')
 
-module.exports = { signup, login, checkUserByToken, logout, updateAvatar }
+module.exports = {
+  signup,
+  login,
+  checkUserByToken,
+  logout,
+  updateAvatar,
+}
