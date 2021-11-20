@@ -1,8 +1,12 @@
 const { NotFound } = require('http-errors')
+
 const { Contact } = require('../../model')
 
 const addContact = async (req, res) => {
-  const newProduct = { ...req.body, owner: req.user._id }
+  const newProduct = {
+    ...req.body,
+    owner: req.user._id,
+  }
   const result = await Contact.create(newProduct)
   if (!result) {
     throw new NotFound('Not found')
