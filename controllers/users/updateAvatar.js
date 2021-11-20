@@ -1,7 +1,7 @@
 const fs = require('fs/promises')
 const path = require('path')
 const Jimp = require('jimp')
-const { Unauthorized, NotFound, BadRequest } = require('http-errors')
+const { NotFound, BadRequest } = require('http-errors')
 const moment = require('moment')
 
 const { User } = require('../../model')
@@ -9,16 +9,12 @@ const { User } = require('../../model')
 const avatarDir = path.join(__dirname, '../../public/avatars')
 
 const updateAvatar = async (req, res) => {
-  if (!req.user) {
-    throw new Unauthorized('Not authorized')
-  }
-
   if (!req.file) {
     throw new BadRequest('Enter the file please')
   }
 
   const { path: tmpUpload, originalname } = req.file
-  const { email, _id } = req.user
+  const { _id } = req.user
 
   try {
     await Jimp.read(tmpUpload)
@@ -32,13 +28,12 @@ const updateAvatar = async (req, res) => {
         console.log(err)
       })
 
-    // console.log(tmpUpload)
     const date = moment().format('DD-MM-YYYY_hh-mm-ss')
     const fileName = `${_id}_${date}_${originalname}`
-    const resultUpload = path.join(avatarDir, email, fileName)
+    const resultUpload = path.join(avatarDir, String(_id), fileName)
 
     await fs.rename(tmpUpload, resultUpload)
-    const avatar = path.join('/avatars', email, fileName)
+    const avatar = path.join('/avatars', String(_id), fileName)
 
     const result = await User.findByIdAndUpdate(
       _id,
